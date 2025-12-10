@@ -3,19 +3,37 @@
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function LoginPage() {
   const router = useRouter()
 
+  // Jika user sudah login, redirect ke dashboard
+  useEffect(() => {
+    const checkSession = async () => {
+      if (typeof window !== 'undefined') {
+        // Cek session menggunakan next-auth client-side
+        const {getSession} = await import('next-auth/react')
+        const session = await getSession()
+        if (session) {
+          router.push('/dashboard')
+        }
+      }
+    }
+    
+    checkSession()
+  }, [router])
+
   const handleGoogleLogin = async () => {
     try {
+      // Gunakan redirect otomatis dari NextAuth dengan callback URL yang eksplisit
       const result = await signIn('google', { 
-        redirect: false,
-        callbackUrl: '/dashboard' 
+        callbackUrl: `${window.location.origin}/dashboard` 
       })
       
-      if (result?.ok) {
-        router.push('/dashboard')
+      // Jangan tambahkan router.push di sini karena signIn sudah handle redirect
+      if (result?.error) {
+        console.error('Login error:', result.error)
       }
     } catch (error) {
       console.error('Login error:', error)
