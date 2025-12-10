@@ -14,35 +14,14 @@ export default function DashboardPage() {
     console.log('Dashboard - Session Data:', session)
   }, [status, session])
 
-  // Redirect ke login jika belum authenticated
-  useEffect(() => {
-    if (status === 'unauthenticated') {
-      console.log('Redirecting to login - unauthenticated')
-      router.push('/login')
-    }
-  }, [status, router])
-
-  // Loading state
+  // Loading state sekarang ditangani di layout
   if (status === 'loading') {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-700 mx-auto mb-4"></div>
-          <p className="text-gray-600">Memuat...</p>
-        </div>
-      </div>
-    )
+    return null // Loading state ditangani di layout
   }
 
-  // Jika tidak ada session, jangan render apa-apa (akan redirect)
+  // Jika tidak ada session, jangan render apa-apa (akan redirect di layout)
   if (!session) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-gray-600">Redirecting...</p>
-        </div>
-      </div>
-    )
+    return null
   }
 
   const handleLogout = async () => {
@@ -94,19 +73,19 @@ export default function DashboardPage() {
               <a href="#" className="text-gray-600 hover:text-gray-800 font-medium transition-colors">
                 Dashboard
               </a>
-              <button 
+              <button
                 onClick={handleNavigateToKalori}
                 className="text-gray-600 hover:text-gray-800 font-medium transition-colors"
               >
                 Kalori
               </button>
-              <button 
+              <button
                 onClick={handleNavigateToAktivitas}
                 className="text-gray-600 hover:text-gray-800 font-medium transition-colors"
               >
                 Aktivitas
               </button>
-              <button 
+              <button
                 onClick={handleNavigateToRiwayat}
                 className="text-gray-600 hover:text-gray-800 font-medium transition-colors"
               >
@@ -116,7 +95,7 @@ export default function DashboardPage() {
 
             {/* Profile Section - Made Clickable */}
             <div className="flex items-center space-x-4">
-              <button 
+              <button
                 onClick={handleNavigateToProfile}
                 className="flex items-center space-x-3 hover:bg-gray-50 rounded-lg p-2 transition-colors duration-200 group"
               >
@@ -163,7 +142,7 @@ export default function DashboardPage() {
 
         {/* Menu Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div 
+          <div
             onClick={handleNavigateToKalori}
             className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow cursor-pointer hover:scale-105 transform transition-transform duration-200"
           >
@@ -176,7 +155,7 @@ export default function DashboardPage() {
             <p className="text-sm text-gray-500">Monitor kondisi tubuh Anda</p>
           </div>
 
-          <div 
+          <div
             onClick={handleNavigateToAktivitas}
             className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow cursor-pointer hover:scale-105 transform transition-transform duration-200"
           >
@@ -189,7 +168,7 @@ export default function DashboardPage() {
             <p className="text-sm text-gray-500">Catat olahraga harian</p>
           </div>
 
-          <div 
+          <div
             onClick={handleNavigateToNutrisi}
             className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow cursor-pointer hover:scale-105 transform transition-transform duration-200"
           >
@@ -202,7 +181,7 @@ export default function DashboardPage() {
             <p className="text-sm text-gray-500">Pantau asupan makanan</p>
           </div>
 
-          <div 
+          <div
             onClick={handleNavigateToLaporan}
             className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow cursor-pointer hover:scale-105 transform transition-transform duration-200"
           >
