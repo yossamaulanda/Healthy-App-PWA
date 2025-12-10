@@ -1,9 +1,5 @@
 // app/dashboard/layout.tsx
-'use client'
-
-// Hapus proteksi route dari layout untuk sementara
-// Kita hanya akan fokus pada proteksi di page.tsx
-
+// Layout sederhana tanpa proteksi route untuk menghindari konflik
 export default function DashboardLayout({
   children,
 }: {
