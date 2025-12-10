@@ -12,34 +12,34 @@ export default function DashboardPage() {
   useEffect(() => {
     console.log('Dashboard - Session Status:', status)
     console.log('Dashboard - Session Data:', session)
-    console.log('Dashboard - Window Location:', typeof window !== 'undefined' ? window.location.href : 'N/A')
   }, [status, session])
 
-  // Loading state sekarang ditangani di layout
+  // Redirect ke login jika belum authenticated
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      console.log('Redirecting to login - unauthenticated')
+      router.push('/login')
+    }
+  }, [status, router])
+
+  // Loading state
   if (status === 'loading') {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-700 mx-auto mb-4"></div>
-          <p className="text-gray-600">Memuat Dashboard...</p>
+          <p className="text-gray-600">Memuat...</p>
         </div>
       </div>
     )
   }
 
-  // Jika tidak ada session, tampilkan pesan debug
+  // Jika tidak ada session, jangan render apa-apa (akan redirect)
   if (!session) {
-    console.log('Dashboard - No session found, redirecting...')
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-gray-600">Session tidak ditemukan, mengarahkan ke login...</p>
-          <button 
-            onClick={() => router.push('/login')}
-            className="mt-4 bg-gray-700 text-white px-4 py-2 rounded"
-          >
-            Kembali ke Login
-          </button>
+          <p className="text-gray-600">Redirecting...</p>
         </div>
       </div>
     )
@@ -159,14 +159,6 @@ export default function DashboardPage() {
           <p className="text-gray-500">
             Kelola kesehatan Anda dengan mudah
           </p>
-        </div>
-
-        {/* Session Info - Added for debugging */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8">
-          <h3 className="font-semibold text-blue-800 mb-2">Session Info (Debug)</h3>
-          <p className="text-sm text-blue-700">Status: {status}</p>
-          <p className="text-sm text-blue-700">Name: {session.user?.name || 'N/A'}</p>
-          <p className="text-sm text-blue-700">Email: {session.user?.email || 'N/A'}</p>
         </div>
 
         {/* Menu Cards */}
