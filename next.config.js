@@ -163,7 +163,34 @@ const nextConfig = {
   // Add experimental features if needed
   experimental: {
     // appDir: true, // if using app directory
-  }
+  },
+  // Headers untuk NextAuth dan domain preview
+  async headers() {
+    return [
+      {
+        // Menambahkan headers ke semua route untuk NextAuth
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*', // Allow all origins for preview deployment
+          },
+          {
+            key: 'Access-Control-Allow-Credentials',
+            value: 'true',
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
+          },
+        ],
+      },
+    ]
+  },
 };
 
 module.exports = withPWA(nextConfig);
