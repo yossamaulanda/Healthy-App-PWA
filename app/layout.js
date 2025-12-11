@@ -1,27 +1,30 @@
-import { Providers } from './providers'
 import './globals.css'
+import { Inter } from 'next/font/google'
+import { Providers } from './providers'
+
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'ACTLY - Health Tracking App',
-  description: 'Track your health activities and calories',
-  manifest: '/manifest.json',
-  themeColor: '#1F2937',
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'default',
-    title: 'ACTLY',
-  },
-  icons: {
-    icon: '/icons/icon-192.png',
-    apple: '/icons/icon-180.png',
-  },
+  title: 'Aplikasi Login',
+  description: 'Aplikasi login dengan Google menggunakan NextAuth',
 }
 
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="id">
-      <body>
-        <Providers>{children}</Providers>
+      <head>
+        {/* Hapus tag PWA untuk saat ini */}
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
+
+      <body className={inter.className}>
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   )
