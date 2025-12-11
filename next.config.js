@@ -164,16 +164,15 @@ const nextConfig = {
   experimental: {
     // appDir: true, // if using app directory
   },
-  // Headers untuk NextAuth dan domain preview
+  // Konfigurasi untuk mengatasi masalah OAuthCallback
   async headers() {
     return [
       {
-        // Menambahkan headers ke semua route untuk NextAuth
-        source: '/(.*)',
+        source: '/api/auth/:path*',
         headers: [
           {
             key: 'Access-Control-Allow-Origin',
-            value: '*', // Allow all origins for preview deployment
+            value: process.env.NEXTAUTH_URL || 'https://healthy-app-pwa-egfz.vercel.app',
           },
           {
             key: 'Access-Control-Allow-Credentials',
@@ -186,6 +185,20 @@ const nextConfig = {
           {
             key: 'Access-Control-Allow-Headers',
             value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
+          },
+        ],
+      },
+      {
+        // Menambahkan headers ke semua route lainnya
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
           },
         ],
       },
