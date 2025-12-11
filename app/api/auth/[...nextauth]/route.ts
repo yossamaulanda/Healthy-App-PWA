@@ -1,36 +1,22 @@
 import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 
-// Konfigurasi langsung di handler
+// Konfigurasi NextAuth untuk domain production
 const handler = NextAuth({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      // Tambahkan konfigurasi tambahan
-      authorization: {
-        params: {
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code"
-        }
-      }
     })
   ],
   callbacks: {
     async session({ session, token }) {
-      // Tambahkan logging
-      console.log('Session callback:', { session, token })
-      // Tambahkan token.sub (ID pengguna) ke session
       if (token.sub) {
         session.user.id = token.sub;
       }
       return session
     },
     async jwt({ token, account, profile }) {
-      // Tambahkan logging
-      console.log('JWT callback:', { account, profile })
-      // Simpan informasi dari Google ke JWT token
       if (account && profile) {
         token.accessToken = account.access_token
         token.id = profile.sub
@@ -38,8 +24,6 @@ const handler = NextAuth({
       return token
     },
     async redirect({ url, baseUrl }) {
-      // Tambahkan logging
-      console.log('Redirect callback:', { url, baseUrl })
       // Hanya izinkan redirect ke baseUrl atau path internal
       if (url.startsWith(baseUrl)) return url
       else if (url.startsWith('/')) return `${baseUrl}${url}`
@@ -55,7 +39,7 @@ const handler = NextAuth({
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: true, // Aktifkan untuk debugging
+  debug: process.env.NODE_ENV === 'development', // Aktifkan debug hanya di development
 })
 
 export { handler as GET, handler as POST }
