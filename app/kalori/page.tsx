@@ -166,7 +166,7 @@ export default function KaloriPage() {
 
             {/* Profile Section */}
             <div className="flex items-center space-x-4">
-              <button 
+              <button
                 onClick={handleNavigateToProfile}
                 className="flex items-center space-x-3 hover:bg-gray-50 rounded-lg p-2 transition-colors duration-200 group"
               >
