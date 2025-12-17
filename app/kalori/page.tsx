@@ -122,16 +122,26 @@ export default function KaloriPage() {
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">H</span>
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => router.push('/dashboard')}
+                className="text-gray-600 hover:text-gray-800 transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-lg">H</span>
+                </div>
+                <h1 className="text-xl font-semibold text-gray-800">Catat Kebutuhan Kalori</h1>
               </div>
-              <h1 className="text-xl font-semibold text-gray-800">Healthy</h1>
             </div>
 
             {/* Navigation Menu */}
             <nav className="hidden md:flex items-center space-x-8">
-              <button 
+              <button
                 onClick={handleNavigateToDashboard}
                 className="text-gray-600 hover:text-gray-800 font-medium transition-colors"
               >
@@ -140,13 +150,13 @@ export default function KaloriPage() {
               <a href="#" className="text-gray-800 font-semibold border-b-2 border-gray-800 pb-1">
                 Kalori
               </a>
-              <button 
+              <button
                 onClick={handleNavigateToAktivitas}
                 className="text-gray-600 hover:text-gray-800 font-medium transition-colors"
               >
                 Aktivitas
               </button>
-              <button 
+              <button
                 onClick={handleNavigateToRiwayat}
                 className="text-gray-600 hover:text-gray-800 font-medium transition-colors"
               >
